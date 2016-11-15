@@ -51,12 +51,28 @@ VOLUME /usr/share/elasticsearch/data
 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack
 
+##ServerSide NodeJs
+
+#install npm and NodeJs
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y nodejs
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+
+# Install app dependencies
+#COPY ./package.json /usr/src/app/
+#RUN npm install
+
+# Bundle app source
+COPY ./NodeJs Api/ /usr/src/app/
+
 
 COPY docker-entrypoint.sh /
 
 
 #APP BINDING PORT
-EXPOSE 9200 9300
+EXPOSE 9200 9300 8080
 
 #ENTRYPOINT ["/docker-entrypoint.sh"]
 
