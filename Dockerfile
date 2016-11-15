@@ -15,6 +15,13 @@ RUN set -x \
 # https://artifacts.elastic.co/GPG-KEY-elasticsearch
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
 
+### install filebeat
+RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.0.0-amd64.deb
+RUN dpkg -i filebeat-5.0.0-amd64.deb
+
+
+COPY ./filebeat.template.json ./filebeat.yml /etc/filebeat/
+
 #### install ELasticsearch
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-repositories.html
 # https://www.elastic.co/guide/en/elasticsearch/reference/5.0/deb.html
